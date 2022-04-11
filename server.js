@@ -1,12 +1,23 @@
 const express = require("express");
-const router = express.Router();
+const app = express();
+const routes = require("./route");
+const mongoose = require("mongoose");
+require("dotenv").config();
 
-const admin = require("./modules/routes/admin");
-const user = require("./modules/routes/user");
-const product = require("./modules/routes/product");
+const MONGO_URI = process.env.MONGO_URI;
+const PORT = process.env.PORT;
 
-router.use("/admin", admin);
-router.use("/user", user);
-router.use("/product", product);
+mongoose
+  .connect(MONGO_URI)
+  .then((x) => {
+    console.log("MongoDB connected successfully");
+  })
+  .catch((err) => {
+    console.log("Some Error in connecting mongoDB.\n", err);
+  });
 
-module.exports = router;
+app.use(routes);
+
+app.listen(PORT, () => {
+  console.log("Server is running on Port : ", PORT);
+});
