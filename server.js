@@ -13,14 +13,14 @@ app.use(cors({ credentials: true, origin: true }));
 app.use(cookieParser());
 app.use(express.json());
 
-// mongoose
-//   .connect(MONGO_URI)
-//   .then((x) => {
-//     console.log("MongoDB connected successfully");
-//   })
-//   .catch((err) => {
-//     console.log("Some Error in connecting mongoDB.\n", err);
-//   });
+mongoose
+  .connect(MONGO_URI)
+  .then((x) => {
+    console.log("MongoDB connected successfully");
+  })
+  .catch((err) => {
+    console.log("Some Error in connecting mongoDB.\n", err);
+  });
 
 app.use(routes);
 
