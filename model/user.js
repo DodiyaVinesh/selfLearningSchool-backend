@@ -8,7 +8,11 @@ const User = new schema(
       type: String,
       required: true,
     },
+    profile: {
+      type: String,
+    },
     email: {
+      unique: true,
       type: String,
       required: true,
     },
@@ -16,7 +20,17 @@ const User = new schema(
       type: String,
       required: true,
     },
+    posts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
+      },
+    ],
     isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    isAdmin: {
       type: Boolean,
       default: false,
     },

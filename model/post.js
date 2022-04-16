@@ -66,4 +66,4 @@ const Post = new schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Posts", Post);
+module.exports = mongoose.model("Post", Post);
