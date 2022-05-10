@@ -1,14 +1,22 @@
-// here we will check if user is authenticated or not
-// this middleware will used in most request where we need to check if use is authenticated
-// for ex. addpost,comment,ratting..etc
-
-const user = require("../../model/user");
+const RESPONSE = require("../../RESPONSE");
+const jwt = require("jsonwebtoken");
+const User_Model = require("../../model/user");
 
 const auth = async (req, res, next) => {
-  //do authentication
-  // req.user = user.fing({lakf})
-  req.user = await user.findById("625b1da9527375bee43b9e79");
-  next();
+  try {
+    const token = req.cookies.token;
+    console.log("cookkies :", token);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    const user = await User_Model.findOne({ _id: decoded._id });
+    if (!user) {
+      throw new Error();
+    }
+    req.user = user;
+    next();
+  } catch (err) {
+    console.log(err);
+    res.send(RESPONSE.UNAUTHORIZED);
+  }
 };
 
 module.exports = auth;

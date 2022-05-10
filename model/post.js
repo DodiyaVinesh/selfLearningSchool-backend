@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const schema = mongoose.Schema;
 
 const Post = new schema(
@@ -24,32 +23,48 @@ const Post = new schema(
       type: String,
       required: true,
     },
+    postedBy: {
+      type: schema.Types.ObjectId,
+      ref: "User",
+      require: true,
+    },
     ratting: {
-      one: {
-        type: [],
-        default: 0,
-      },
-      two: {
-        type: [],
-        default: 0,
-      },
-      three: {
-        type: [],
-        default: 0,
-      },
-      four: {
-        type: [],
-        default: 0,
-      },
-      five: {
-        type: [],
-        default: 0,
-      },
+      one: [
+        {
+          type: schema.Types.ObjectId,
+          ref: "User",
+        },
+      ],
+      two: [
+        {
+          type: schema.Types.ObjectId,
+          ref: "User",
+        },
+      ],
+      three: [
+        {
+          type: schema.Types.ObjectId,
+          ref: "User",
+        },
+      ],
+      four: [
+        {
+          type: schema.Types.ObjectId,
+          ref: "User",
+        },
+      ],
+      five: [
+        {
+          type: schema.Types.ObjectId,
+          ref: "User",
+        },
+      ],
     },
     comments: [
       {
         sender: {
-          type: String,
+          type: schema.Types.ObjectId,
+          ref: "User",
           required: true,
         },
         content: {

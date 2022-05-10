@@ -1,5 +1,5 @@
+const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
-
 const schema = mongoose.Schema;
 
 const User = new schema(
@@ -20,12 +20,6 @@ const User = new schema(
       type: String,
       required: true,
     },
-    posts: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Post",
-      },
-    ],
     isVerified: {
       type: Boolean,
       default: false,
@@ -34,8 +28,20 @@ const User = new schema(
       type: Boolean,
       default: false,
     },
+    OTP: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );
+
+User.methods.generateToken = async function () {
+  const user = this;
+  const token = jwt.sign(
+    { _id: user._id.toString() },
+    process.env.JWT_SECRET_KEY
+  );
+  return token;
+};
 
 module.exports = mongoose.model("Users", User);
